@@ -9,15 +9,15 @@ interface itemProps {
     deleteFunction: () => void;
 }
 
-export default function renderItem({item, markDone, deleteFunction}: {item: Task}) {
+export default function renderItem({item, markDone, deleteFunction}: {item: itemProps}) {
     return(
       <View style={styles.itemsContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={markDone}>
           <Text style={item.done ? styles.textDone : styles.text}>{item.title}</Text>
           <Text style={item.done ? styles.textDone : styles.text}>{item.date.toLocaleDateString()}</Text>
         </TouchableOpacity>
         {item.done && (
-          <TouchableOpacity style={styles.removeButton}>
+          <TouchableOpacity style={styles.removeButton} onPress={deleteFunction}>
             <Text style={styles.whiteText}>Eliminar</Text>
           </TouchableOpacity>
           )

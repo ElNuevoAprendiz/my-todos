@@ -2,7 +2,7 @@
 import React from "react";
 import { Text, View, TouchableOpacity, TextInput, FlatList } from "react-native";
 import styles from "./Styles";
-import renderItem from "./RenderItem";
+import RenderItem from "./RenderItem";
 
 
 const tasks=[
@@ -30,6 +30,13 @@ export interface Task {
 } 
 
 export default function App() {
+  const markDone = () => {
+    // Lógica para marcar la tarea como hecha
+  };
+
+  const deleteFunction = () => {
+    // Lógica para eliminar la tarea
+  };
   
   return (
     <View style={styles.container}>
@@ -44,7 +51,7 @@ export default function App() {
       </View>
       <View style={styles.scrollContainer}>
         <FlatList 
-          renderItem={renderItem}
+          renderItem={({item})=> (<RenderItem item={item} markDone={markDone} deleteFunction={deleteFunction}/>)}
           data={tasks}
         />
       </View>
