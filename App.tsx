@@ -2,6 +2,7 @@
 import React from "react";
 import { Text, View, TouchableOpacity, TextInput, FlatList } from "react-native";
 import styles from "./Styles";
+import renderItem from "./RenderItem";
 
 
 const tasks=[
@@ -22,29 +23,14 @@ const tasks=[
 },
 ]
 
-interface Task {
+export interface Task {
   title: string;
   done: boolean;
   date: Date;
 } 
 
 export default function App() {
-  function renderItem({item}: {item: Task}) {
-    return(
-      <View style={styles.itemsContainer}>
-        <TouchableOpacity>
-          <Text style={item.done ? styles.textDone : styles.text}>{item.title}</Text>
-          <Text style={item.done ? styles.textDone : styles.text}>{item.date.toLocaleDateString()}</Text>
-        </TouchableOpacity>
-        {item.done && (
-          <TouchableOpacity style={styles.removeButton}>
-            <Text style={styles.whiteText}>Eliminar</Text>
-          </TouchableOpacity>
-          )
-        }
-      </View>
-      );  
-  }
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
