@@ -10,7 +10,7 @@ const tasks=[
 },
 {
     title:'Salir a correr',
-    done: false,
+    done: true,
     date: new Date(),
 },
 {
@@ -30,9 +30,18 @@ export default function App() {
   function renderItem({item}: {item: Task}) {
     return(
       <View style={styles.itemsContainer}>
-        <Text style={styles.text }>{item.title}</Text>)
-        <Text>{item.date.toLocaleDateString()}</Text>
-      </View>);  
+        <TouchableOpacity>
+          <Text style={item.done ? styles.textDone : styles.text}>{item.title}</Text>
+          <Text style={item.done ? styles.textDone : styles.text}>{item.date.toLocaleDateString()}</Text>
+        </TouchableOpacity>
+        {item.done && (
+          <TouchableOpacity style={styles.removeButton}>
+            <Text style={styles.whiteText}>Eliminar</Text>
+          </TouchableOpacity>
+          )
+        }
+      </View>
+      );  
   }
   return (
     <View style={styles.container}>
@@ -82,6 +91,11 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
     fontSize: 18,
   },
+  textDone: {
+    fontStyle: "italic",
+    fontSize: 18,
+    textDecorationLine: 'underline line-through',
+  },
   textInput: {
     borderColor: "#6f6f6f",
     borderWidth: 1,
@@ -96,12 +110,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
   },
+  removeButton: {
+    backgroundColor: '#fb5858',
+    width: Dimensions.get('screen').width * 0.25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
   scrollContainer: {
+    marginTop: 20,
+    
 
   },
   itemsContainer: {
     paddingVertical: 20,
     borderBottomColor: '#e4e4e4',
     borderBottomWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },  
 });
