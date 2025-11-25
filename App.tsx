@@ -1,4 +1,5 @@
-import { StatusBar } from "expo-status-bar";
+
+import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions, FlatList } from "react-native";
 
 const tasks=[
