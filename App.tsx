@@ -21,6 +21,11 @@ const tasks=[
     done: false,
     date: new Date(),
 },
+{
+    title:'Dormir la siesta',
+    done: true,
+    date: new Date(),
+},
 ]
 
 export interface Task {
@@ -31,11 +36,13 @@ export interface Task {
 
 export default function App() {
   const markDone = () => {
-    // Lógica para marcar la tarea como hecha
+    // Lógica para marcar la tarea como hecha 
+    console.log("Tarea marcada como hecha");
   };
 
   const deleteFunction = () => {
     // Lógica para eliminar la tarea
+    console.log("Tarea eliminada");
   };
   
   return (

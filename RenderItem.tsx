@@ -3,13 +3,13 @@ import { Text, View, TouchableOpacity } from "react-native";
 import styles from "./Styles";
 import { Task } from "./App";
 
-interface itemProps {
+interface ItemProps {
     item: Task;
     markDone: () => void;
     deleteFunction: () => void;
 }
 
-export default function renderItem({item, markDone, deleteFunction}: {item: itemProps}) {
+export default function renderItem({item, markDone, deleteFunction}: ItemProps) {
     return(
       <View style={styles.itemsContainer}>
         <TouchableOpacity onPress={markDone}>
