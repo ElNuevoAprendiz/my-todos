@@ -12,6 +12,11 @@ const tasks=[
     done: false,
     date: new Date(),
 },
+{
+    title:'Contar hasta 10',
+    done: false,
+    date: new Date(),
+},
 ]
 
 interface Task {
@@ -25,6 +30,7 @@ export default function App() {
     return(
       <View style={styles.itemsContainer}>
         <Text style={styles.text }>{item.title}</Text>)
+        <Text>{item.date.toLocaleDateString()}</Text>
       </View>);  
   }
   return (
