@@ -25,6 +25,27 @@ export default function App() {
   //setTasks es la funcion que permite actualizar el estado de tasks
   //Este array es el que necesita el FlatList para mostrar las tareas
 
+  const addTask = () => {
+    // Función anónima que contiene la lógica para agregar una nueva tarea
+    const tmp = [...tasks]; //como es una mala practica hacer un push directamente de la tarea, 
+                            // se usa una variable que la clona llamada tmp. Para clonarla, 
+                            // abrimos y cerramos corchetes y usamos el operador ... (el operador tres puntos 
+                            // que nos permite crear un array basado en uno que ya existe que en este caso es task.
+    
+    const newTask: Task = {
+      title: text,
+      done: false,
+      date: new Date()
+    };
+
+    tmp.push(newTask); //se agrega la nueva tarea al array clonado
+
+    setTasks(tmp); //se actualiza el estado de tasks con el array clonado y modificado
+
+    setText(''); //se limpia el TextInput seteando el estado text a una cadena vacía  
+
+  };
+
   const markDone = () => {
     // Lógica para marcar la tarea como hecha 
     console.log("Tarea marcada como hecha");
@@ -51,7 +72,7 @@ export default function App() {
                         }
           value={text}
         />
-        <TouchableOpacity style={styles.addButton}>
+        <TouchableOpacity onPress={addTask} style={styles.addButton}>
           <Text style={styles.whiteText}>Agregar</Text>
         </TouchableOpacity>
       </View>
