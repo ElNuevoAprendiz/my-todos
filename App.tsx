@@ -1,10 +1,9 @@
 
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import { Text, View, TouchableOpacity, TextInput, FlatList } from "react-native";
 import styles from "./Styles";
 import RenderItem from "./RenderItem";
-
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export interface Task {
@@ -15,18 +14,61 @@ export interface Task {
 
 export default function App() {
   
-  const [text,setText] = useState('');{//Estado que maneja el texto que se ingresa en el TextInput
   //text es la variable de estado que contiene el texto actual
+  const [text,setText] = useState('');{//Estado que maneja el texto que se ingresa en el TextInput
   //setText es la funcion que permite actualizar el estado de text
   };
 
-  const [tasks, setTasks] = useState<Task[]>([]);//Estado que maneja la lista de tareas
   //tasks es la variable de estado que contiene la lista actual de tareas
+  const [tasks, setTasks] = useState<Task[]>([]);//Estado que maneja la lista de tareas
+  
   //setTasks es la funcion que permite actualizar el estado de tasks
   //Este array es el que necesita el FlatList para mostrar las tareas
 
+  // Función para OBTENER datos en el almacenamiento asincrónico
+  const getData = async () => {
+  try {
+    const value = await AsyncStorage.getItem('mytodo-tasks');
+    if (value !== null) {
+      // value is values previously stored
+      
+      // Parsear el valor obtenido de AsyncStorage (que es un string) a un array de tareas
+      const tasksLocal = JSON.parse(value);
+
+      // Convertir las fechas de string a objetos Date
+      const tasksWithDates = tasksLocal.map((task: any) => ({
+        ...task,
+        date: new Date(task.date),
+      }));
+
+      setTasks(tasksWithDates); // Actualizar el estado de tasks con las tareas obtenidas
+    }
+  } catch (e) {
+    // error reading value
+  }
+};
+
+// Función para GUARDAR datos en el almacenamiento asincrónico, el valor value va a recibir la lista 
+// de tareas serializada, lo tipamos como lista de tareas (task[]).
+const storeData = async (value:Task[]) => {
+  try {
+    //el valor value se convierte a string antes de guardarlo
+    await AsyncStorage.setItem('mytodo-tasks', JSON.stringify(value));
+  } catch (e) {
+    // saving error
+  }
+};
+
+  
+ 
+  //useEffect para cargar las tareas guardadas en el almacenamiento asincrónico al iniciar la aplicación
+  useEffect(() => {
+    getData();
+  },[]);// El array vacío como segundo argumento asegura que esto se ejecute solo una vez al montar el componente
+  
+  
   // Función para agregar una nueva tarea
-  const addTask = () => {
+    const addTask = () => {
     // Función anónima que contiene la lógica para agregar una nueva tarea
     const tmp = [...tasks]; //como es una mala practica hacer un push directamente de la tarea, 
                             // se usa una variable que la clona llamada tmp. Para clonarla, 
@@ -42,6 +84,8 @@ export default function App() {
     tmp.push(newTask); //se agrega la nueva tarea al array clonado
 
     setTasks(tmp); //se actualiza el estado de tasks con el array clonado y modificado
+
+    
 
     setText(''); //se limpia el TextInput seteando el estado text a una cadena vacía  
 

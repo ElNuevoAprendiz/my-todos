@@ -1,0 +1,13 @@
+const loadTasks = async () => {
+      try {
+        const tasksJson = await AsyncStorage.getItem('@tasks');
+        if (tasksJson) {
+          const savedTasks: Task[] = JSON.parse(tasksJson);
+          // Convertir las cadenas de fecha de vuelta a objetos Date
+          const tasksWithDates = savedTasks.map(task => ({
+            ...task,
+            date: new Date(task.date),
+          }));
+          setTasks(tasksWithDates);
+        }
+      }
