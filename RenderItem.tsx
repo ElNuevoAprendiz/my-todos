@@ -6,18 +6,21 @@ import { Task } from "./App";
 interface ItemProps {
     item: Task;
     markDone: (task: Task) => void;
-    deleteFunction: () => void;
+    deleteFunction: (task: Task) => void;
 }
 
 export default function renderItem({item, markDone, deleteFunction}: ItemProps) {
     return(
       <View style={styles.itemsContainer}>
-        <TouchableOpacity onPress={() => markDone(item)} style={styles.item}>
+        <TouchableOpacity onPress={() => markDone(item)}>
           <Text style={item.done ? styles.textDone : styles.text}>{item.title}</Text>
           <Text style={item.done ? styles.textDone : styles.text}>{item.date.toLocaleDateString()}</Text>
         </TouchableOpacity>
         {item.done && (
-          <TouchableOpacity style={styles.removeButton} onPress={deleteFunction}>
+          <TouchableOpacity 
+            style={styles.removeButton} 
+            onPress={() => deleteFunction(item)}
+          >
             <Text style={styles.whiteText}>Eliminar</Text>
           </TouchableOpacity>
           )

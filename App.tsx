@@ -25,6 +25,7 @@ export default function App() {
   //setTasks es la funcion que permite actualizar el estado de tasks
   //Este array es el que necesita el FlatList para mostrar las tareas
 
+  // Función para agregar una nueva tarea
   const addTask = () => {
     // Función anónima que contiene la lógica para agregar una nueva tarea
     const tmp = [...tasks]; //como es una mala practica hacer un push directamente de la tarea, 
@@ -46,32 +47,62 @@ export default function App() {
 
   };
 
+  // Función para marcar una tarea como hecha o deshecha
   const markDone = (task:Task) => {
-    // recibimos la tarea a borrar como task, tipada como Task 
+    // Recibimos la tarea a marcar como hecha (done), como task, tipada como Task 
+    
     //Para eliminar vamos a clonar la matriz con la tarea, para luego poder buscar el indice de la misma.
     const tmp = [...tasks];
-    const index = tmp.findIndex(elementoDelArray => elementoDelArray.title === task.title);//con esta función findIndex recibimos item actual, y seleccionamos el titulo del elemento que buscamos
-                                      // y lo comparamos con los titulos de los otros elementos del array.
-                                      //  buscamos el indice de la tarea a modificar
-                                      // Usamos el metodo findIndex que recibe una funcion que recibe cada 
-                                      // elemento del array, utilizamo la varia local el.
-                                      //*** Ver la explicacion de findIndex para ver la explicación en el archivo findIndex.html */
     
-    const todo = tasks[index];// Guardamos en la variable 'todo' la tarea que queremos modificar
+    const index = tmp.findIndex(elementoDelArray => elementoDelArray.title === task.title);
+                      //La función findIndex recorre todo el array y va probando con cada elemento del mismo
+                    // la condición que le pasamos luego de la flecha.
+                    // En este caso lo que hacemos es comparar el titulo del elemento del array sobre el que está 
+                    // parada la función en este momento (elementoDelArray.title) y compararlo con el que nosotros 
+                    // buscamos (task,title), que es el titulo de la tarea que queremos eliminar.
+                    // Si lo encuentra, devuelve el indice de ese elemento en el array y si no lo encuentra devuelve -1.
+                                      
+                    //*** Ver la explicacion de findIndex para ver la explicación en el archivo findIndex.html */
+    
+    
+    const todo = tasks[index];// Guardamos en la variable 'todo' (a realizar) la tarea que queremos modificar
     todo.done = !todo.done;//cambiamos el estado de done a su contrario
     setTasks(tmp);//actualizamos el estado de tasks con la matriz clonada y modificada
   };
 
-  const deleteFunction = () => {
-    // Lógica para eliminar la tarea
-    console.log("Tarea eliminada");
+
+  // Función para eliminar una tarea, se le da funcionalidad de manera similar a markDone
+  const deleteFunction = (task:Task) => {
+    // recibimos la tarea a borrar como task, tipada como Task 
+    
+    //Para eliminar vamos a clonar la matriz con la tarea, para luego poder buscar el indice de la misma.
+    const tmp = [...tasks];
+
+    const index = tmp.findIndex(elementoDelArray => elementoDelArray.title === task.title);
+                    //La función findIndex recorre todo el array y va probando con cada elemento del mismo
+                    // la condición que le pasamos luego de la flecha.
+                    // En este caso lo que hacemos es comparar el titulo del elemento del array sobre el que está 
+                    // parada la función en este momento (elementoDelArray.title) y compararlo con el que nosotros 
+                    // buscamos (task,title), que es el titulo de la tarea que queremos eliminar.
+                    // Si lo encuentra, devuelve el indice de ese elemento en el array y si no lo encuentra devuelve -1.
+                                      
+                    //*** Ver la explicacion de findIndex para ver la explicación en el archivo findIndex.html */
+    
+    tmp.splice(index,1); //eliminamos la tarea del array clonado usando splice, que recibe el indice y la cantidad de elementos a eliminar
+
+    setTasks(tmp); //actualizamos el estado de tasks con la matriz clonada y modificada, 
+                   // es decir asignamos nuestra nueva lista de tareas sin la tarea eliminada 
+                   // a nuestro estado tasks.
+    
   };
   
   return (
     <View style={styles.container}>
+      
       <Text style={styles.title}>
         Mis tareas
       </Text>
+      
       <View style={styles.inputContainer}>
         <TextInput 
           placeholder='Agregar una nueva tarea' 
@@ -83,16 +114,22 @@ export default function App() {
                         }
           value={text}
         />
+
         <TouchableOpacity onPress={addTask} style={styles.addButton}>
           <Text style={styles.whiteText}>Agregar</Text>
         </TouchableOpacity>
+      
       </View>
+
       <View style={styles.scrollContainer}>
+        
         <FlatList 
           renderItem={({item})=> (<RenderItem item={item} markDone={markDone} deleteFunction={deleteFunction}/>)}
           data={tasks}
         />
+
       </View>
+
     </View>
     
   );
