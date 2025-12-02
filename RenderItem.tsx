@@ -5,14 +5,14 @@ import { Task } from "./App";
 
 interface ItemProps {
     item: Task;
-    markDone: () => void;
+    markDone: (task: Task) => void;
     deleteFunction: () => void;
 }
 
 export default function renderItem({item, markDone, deleteFunction}: ItemProps) {
     return(
       <View style={styles.itemsContainer}>
-        <TouchableOpacity onPress={markDone}>
+        <TouchableOpacity onPress={() => markDone(item)} style={styles.item}>
           <Text style={item.done ? styles.textDone : styles.text}>{item.title}</Text>
           <Text style={item.done ? styles.textDone : styles.text}>{item.date.toLocaleDateString()}</Text>
         </TouchableOpacity>

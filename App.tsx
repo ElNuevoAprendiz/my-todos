@@ -50,13 +50,16 @@ export default function App() {
     // recibimos la tarea a borrar como task, tipada como Task 
     //Para eliminar vamos a clonar la matriz con la tarea, para luego poder buscar el indice de la misma.
     const tmp = [...tasks];
-    const index = tmp.findIndex(el => el.title === task.title);//con esta función findIndex el titulo del elemento que buscamos
+    const index = tmp.findIndex(elementoDelArray => elementoDelArray.title === task.title);//con esta función findIndex recibimos item actual, y seleccionamos el titulo del elemento que buscamos
                                       // y lo comparamos con los titulos de los otros elementos del array.
                                       //  buscamos el indice de la tarea a modificar
                                       // Usamos el metodo findIndex que recibe una funcion que recibe cada 
                                       // elemento del array, utilizamo la varia local el.
-    const todo = tmp[index];//guardamos en la variable todo la tarea que queremos modificar
+                                      //*** Ver la explicacion de findIndex para ver la explicación en el archivo findIndex.html */
+    
+    const todo = tasks[index];// Guardamos en la variable 'todo' la tarea que queremos modificar
     todo.done = !todo.done;//cambiamos el estado de done a su contrario
+    setTasks(tmp);//actualizamos el estado de tasks con la matriz clonada y modificada
   };
 
   const deleteFunction = () => {

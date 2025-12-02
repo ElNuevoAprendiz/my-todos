@@ -1,0 +1,24 @@
+El método findIndex() ejecuta la función de callback una vez por cada índice del array hasta que encuentre uno donde callback devuelva un valor verdadero (eso es, un valor que fuerza un true).
+
+Si dicho elemento es encontrado, findIndex() inmediatamente devuelve el índice del elemento. Si la función callback nunca devuelve un valor verdadero (o el tamaño del array es 0), findIndex devuelve -1.
+
+Nota: A diferencia de otros métodos de arrays como Array.some(), callback se ejecuta incluso en índices sin valores asignados.
+
+callback se invoca con tres argumentos:
+
+    El valor del elemento
+    El índice del elemento
+    El Array que será recorrido.
+
+
+Ejemplo:
+
+const fruits = ["apple", "banana", "cantaloupe", "blueberries", "grapefruit"];
+
+const index = fruits.findIndex((fruit) => fruit === "blueberries");
+
+console.log(index); // 3
+console.log(fruits[index]); // blueberries
+
+/*  En el siguiente ejemplo usamos findIndex para buscar el indice de una tarea en un array de tareas
+/*  para luego modificar su estado de completada a no completada o viceversa */
