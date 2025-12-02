@@ -85,7 +85,7 @@ const storeData = async (value:Task[]) => {
 
     setTasks(tmp); //se actualiza el estado de tasks con el array clonado y modificado
 
-    
+    storeData(tmp); //se guarda la nueva lista de tareas en el almacenamiento asincrónico
 
     setText(''); //se limpia el TextInput seteando el estado text a una cadena vacía  
 
@@ -112,6 +112,7 @@ const storeData = async (value:Task[]) => {
     const todo = tasks[index];// Guardamos en la variable 'todo' (a realizar) la tarea que queremos modificar
     todo.done = !todo.done;//cambiamos el estado de done a su contrario
     setTasks(tmp);//actualizamos el estado de tasks con la matriz clonada y modificada
+    storeData(tmp); //se guarda la nueva lista de tareas en el almacenamiento asincrónico
   };
 
 
@@ -137,7 +138,7 @@ const storeData = async (value:Task[]) => {
     setTasks(tmp); //actualizamos el estado de tasks con la matriz clonada y modificada, 
                    // es decir asignamos nuestra nueva lista de tareas sin la tarea eliminada 
                    // a nuestro estado tasks.
-    
+    storeData(tmp); //se guarda la nueva lista de tareas en el almacenamiento asincrónico
   };
   
   return (
