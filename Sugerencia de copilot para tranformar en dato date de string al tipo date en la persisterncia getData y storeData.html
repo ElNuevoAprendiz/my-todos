@@ -1,0 +1,8 @@
+Para agregar a la funcion getData que tranforme las fechas guardadas en string a objetos Date.
+      // Convertir las fechas de string a objetos Date
+      const tasksWithDates = tasksLocal.map((task: any) => ({
+        ...task,
+        date: new Date(task.date),
+      }));
+
+      setTasks(tasksWithDates); // Actualizar el estado de tasks con las tareas obtenidas

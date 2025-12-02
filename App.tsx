@@ -35,13 +35,7 @@ export default function App() {
       // Parsear el valor obtenido de AsyncStorage (que es un string) a un array de tareas
       const tasksLocal = JSON.parse(value);
 
-      // Convertir las fechas de string a objetos Date
-      const tasksWithDates = tasksLocal.map((task: any) => ({
-        ...task,
-        date: new Date(task.date),
-      }));
-
-      setTasks(tasksWithDates); // Actualizar el estado de tasks con las tareas obtenidas
+      setTasks(tasksLocal); // Actualizar el estado de tasks con las tareas obtenidas
     }
   } catch (e) {
     // error reading value
